@@ -1,12 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import { connectDB } from './config/db.js';
-import categoriaRoutes from './routes/categoriaRoutes.js';
-import productoRoutes from './routes/productoRoutes.js';
-import usuarioRoutes from './routes/usuarioRoutes.js';
-import ordenRoutes from './routes/ordenRoutes.js';
-import cors from 'cors';
+import { conectarDB } from './config/db.js';
+import categoriaRoutes from './routes/categoria.js';
+import productoRoutes from './routes/producto.js';
+import usuarioRoutes from './routes/usuario.js';
+import ordenRoutes from './routes/orden.js';
 
 const app = express();
 
@@ -15,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-connectDB();
+conectarDB();
 
 // Routes
 app.use('/api/categorias', categoriaRoutes);
