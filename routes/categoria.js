@@ -1,44 +1,38 @@
 import { Router } from 'express';
-import controller from '../controllers/usuario.js';
+import controller from '../controllers/categoria.js';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validarCampos.js';
 
 const router = Router();
 
-router.post('/login', 
+router.get('/categorias', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.loginUsuario
+    ], controller.getCategorias
 );
 
-router.get('/usuarios', 
+router.get('/categoria/:id', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.getUsuarios
-);
-
-router.get('/unUsuario/:id', 
-    [check('email').isEmail().withMessage('El email debe ser válido'),
-        validarCampos,
-    ], controller.getUsuariosPorId
+    ], controller.getCategoriaPorId
 );
 
 router.post('/crear', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.crearUsuario
+    ], controller.crearCategoria
 );
 
 router.put('/modificar/:id', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.actualizarUsuario
+    ], controller.actualizarCategoria
 );
 
 router.delete('/eliminar/:id', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.eliminarUsuario
+    ], controller.eliminarCategoria
 );
 
 export default router;

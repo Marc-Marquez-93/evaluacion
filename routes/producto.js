@@ -1,44 +1,50 @@
 import { Router } from 'express';
-import controller from '../controllers/usuario.js';
+import controller from '../controllers/producto.js';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validarCampos.js';
 
 const router = Router();
 
-router.post('/login', 
+router.get('/productos', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.loginUsuario
+    ], controller.getProductos
 );
 
-router.get('/usuarios', 
+router.get('/unProducto/:id', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.getUsuarios
-);
-
-router.get('/unUsuario/:id', 
-    [check('email').isEmail().withMessage('El email debe ser válido'),
-        validarCampos,
-    ], controller.getUsuariosPorId
+    ], controller.getProductosPorId
 );
 
 router.post('/crear', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.crearUsuario
+    ], controller.crearProducto
 );
 
 router.put('/modificar/:id', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.actualizarUsuario
+    ], controller.actualizarProducto
 );
 
 router.delete('/eliminar/:id', 
     [check('email').isEmail().withMessage('El email debe ser válido'),
         validarCampos,
-    ], controller.eliminarUsuario
+    ], controller.eliminarProducto
+);
+
+router.post('/CrearReseña/:id', 
+    [check('email').isEmail().withMessage('El email debe ser válido'),
+        validarCampos,
+    ], controller.crearReseña
+);
+
+router.put('/actualizarReseña/:id', 
+    [check('email').isEmail().withMessage('El email debe ser válido'),
+        validarCampos,
+    ], controller.actualizarReseña
 );
 
 export default router;
