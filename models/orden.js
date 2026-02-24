@@ -7,4 +7,4 @@ const orden = new mongoose.Schema({
     estado: {type: Number, required: true}, // 0 pendiente, 1 pagada, 2 enviada, 3 entregada, 4 cancelada
 });
 
-export default mongoose.model("Orden", orden);
+export default mongoose.model("Ordene", orden);
