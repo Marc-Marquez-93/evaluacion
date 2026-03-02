@@ -22,7 +22,7 @@ router.get('/orden/:id',
   ], controller.getOrdenPorId
 );
 
-router.post('/crear/:id', 
+router.post('/crear', 
     [
     validarJWT,
     check("email").isEmail().withMessage("El email debe ser válido"),

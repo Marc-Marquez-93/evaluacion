@@ -3,19 +3,7 @@ import controller from '../controllers/producto.js';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validarCampos.js';
 import { validarJWT } from "../middlewares/validar-jwt.js";
-import multer from 'multer';
-import path from 'path';
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); 
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({ storage: storage });
+import { upload } from '../middlewares/multer.js';
 
 const router = Router();
 
@@ -35,7 +23,7 @@ router.get('/unProducto/:id',
   ], controller.getProductosPorId
 );
 
-router.post('/crear', 
+router.post('/crear', upload.single('imagenUrl'),
     [
     validarJWT,
     check("email").isEmail().withMessage("El email debe ser válido"),
@@ -43,7 +31,7 @@ router.post('/crear',
   ], controller.crearProducto
 );
 
-router.put('/modificar/:id', 
+router.put('/modificar/:id', upload.single('imagenUrl'),
     [
     validarJWT,
     check("email").isEmail().withMessage("El email debe ser válido"),

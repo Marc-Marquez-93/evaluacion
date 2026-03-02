@@ -3,6 +3,7 @@ import controller from '../controllers/categoria.js';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validarCampos.js';
 import { validarJWT } from "../middlewares/validar-jwt.js";
+import { upload } from '../middlewares/multer.js';
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.get('/categoria/:id',
   ], controller.getCategoriaPorId
 );
 
-router.post('/crear', 
+router.post('/crear', upload.single('imagenIcon'),
     [
     validarJWT,
     check("email").isEmail().withMessage("El email debe ser válido"),
@@ -30,7 +31,7 @@ router.post('/crear',
   ], controller.crearCategoria
 );
 
-router.put('/modificar/:id', 
+router.put('/modificar/:id', upload.single('imagenIcon'),
     [
     validarJWT,
     check("email").isEmail().withMessage("El email debe ser válido"),
