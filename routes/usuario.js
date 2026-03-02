@@ -9,7 +9,8 @@ const router = Router();
 router.post(
   "/login",
   [
-    check("email").isEmail().withMessage("El email debe ser válido"),
+    check("email", "El email es obligatorio y debe ser válido").isEmail(),
+    check("password", "La contraseña es obligatoria").not().isEmpty(),
     validarCampos,
   ],
   controller.loginUsuario,
@@ -19,7 +20,6 @@ router.get(
   "/usuarios",
   [
     validarJWT,
-    check("email").isEmail().withMessage("El email debe ser válido"),
     validarCampos,
   ],
   controller.getUsuarios,
@@ -29,7 +29,7 @@ router.get(
   "/unUsuario/:id",
   [
     validarJWT,
-    check("email").isEmail().withMessage("El email debe ser válido"),
+    check("id", "No es un ID válido de MongoDB").isMongoId(),
     validarCampos,
   ],
   controller.getUsuariosPorId,
@@ -38,7 +38,10 @@ router.get(
 router.post(
   "/crear",
   [
-    check("email").isEmail().withMessage("El email debe ser válido"),
+    check("nombre", "El nombre es obligatorio").not().isEmpty(),
+    check("email", "El email es obligatorio y debe ser válido").isEmail(),
+    check("password", "La contraseña debe tener al menos 6 caracteres").isLength({ min: 6 }),
+    check("rol", "El rol es obligatorio").not().isEmpty(),
     validarCampos,
   ],
   controller.crearUsuario,
@@ -48,7 +51,11 @@ router.put(
   "/modificar/:id",
   [
     validarJWT,
-    check("email").isEmail().withMessage("El email debe ser válido"),
+    check("id", "No es un ID válido de MongoDB").isMongoId(),
+    check("nombre", "El nombre no puede estar vacío").optional().not().isEmpty(),
+    check("email", "El email debe ser válido").optional().isEmail(),
+    check("password", "La contraseña debe tener al menos 6 caracteres").optional().isLength({ min: 6 }),
+    check("rol", "El rol no puede estar vacío").optional().not().isEmpty(),
     validarCampos,
   ],
   controller.actualizarUsuario,
@@ -58,7 +65,7 @@ router.delete(
   "/eliminar/:id",
   [
     validarJWT,
-    check("email").isEmail().withMessage("El email debe ser válido"),
+    check("id", "No es un ID válido de MongoDB").isMongoId(),
     validarCampos,
   ],
   controller.eliminarUsuario,
