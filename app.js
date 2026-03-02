@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 import 'dotenv/config';
 import { conectarDB } from './config/db.js';
 import categoriaRoutes from './routes/categoria.js';
@@ -9,8 +10,16 @@ import ordenRoutes from './routes/orden.js';
 
 const app = express();
 
+// const corsOptions = {
+//   origin: 'http://localhost:5173', 
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   optionsSuccessStatus: 200 
+// };
+// app.use(cors(corsOptions));
+
 // Middleware
 app.use(cors());
+app.use(morgan('dev'));
 app.use(express.json());
 
 // Connect to MongoDB
