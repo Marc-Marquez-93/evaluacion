@@ -33,14 +33,17 @@ const categoriaController = {
 
             const imagenIcon = req.file ? req.file.path : "";
 
+            const existeCategoria = await Categoria.findOne({ nombre });
+            if (existeCategoria) return res.status(400).json({ msg: "Esa categoría ya existe" });
+
             if (!imagenIcon) {
                 return res.status(400).json({ msg: "El icono/imagen de la categoría es obligatorio" });
             }
 
             if (!descripcion || descripcion.trim() === "") {
-                const prompt = `Actúa como un experto en comercio electrónico. Escribe una descripción breve y atractiva (máximo 2 líneas) para una categoría de productos llamada "${nombre}".`;
+                const prompt = `Actúa como un experto en comercio electrónico. Escribe una descripción breve y atractiva (máximo 2 líneas) para una categoría de productos llamada "${nombre}". Importante, decide tu un discurso, me estas describiendo la categoria con tus conocimientos, no debes esperar mi opinion`;
                 const descripcionIA = await llamarGemini(prompt);
-                
+
                 descripcion = descripcionIA || "Categoría de productos del marketplace.";
             }
 
